@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/ReactFaceDetectionApp/static/css/main.4985a48c.chunk.css",
+    "main.js": "/ReactFaceDetectionApp/static/js/main.c5d59960.chunk.js",
+    "main.js.map": "/ReactFaceDetectionApp/static/js/main.c5d59960.chunk.js.map",
+    "runtime-main.js": "/ReactFaceDetectionApp/static/js/runtime-main.09cc4bfe.js",
+    "runtime-main.js.map": "/ReactFaceDetectionApp/static/js/runtime-main.09cc4bfe.js.map",
+    "static/css/2.3b6f1bda.chunk.css": "/ReactFaceDetectionApp/static/css/2.3b6f1bda.chunk.css",
+    "static/js/2.6ee0277c.chunk.js": "/ReactFaceDetectionApp/static/js/2.6ee0277c.chunk.js",
+    "static/js/2.6ee0277c.chunk.js.map": "/ReactFaceDetectionApp/static/js/2.6ee0277c.chunk.js.map",
+    "index.html": "/ReactFaceDetectionApp/index.html",
+    "precache-manifest.b6480023d26b0a1f81f467a10ecfd928.js": "/ReactFaceDetectionApp/precache-manifest.b6480023d26b0a1f81f467a10ecfd928.js",
+    "service-worker.js": "/ReactFaceDetectionApp/service-worker.js",
+    "static/css/2.3b6f1bda.chunk.css.map": "/ReactFaceDetectionApp/static/css/2.3b6f1bda.chunk.css.map",
+    "static/css/main.4985a48c.chunk.css.map": "/ReactFaceDetectionApp/static/css/main.4985a48c.chunk.css.map",
+    "static/js/2.6ee0277c.chunk.js.LICENSE.txt": "/ReactFaceDetectionApp/static/js/2.6ee0277c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.09cc4bfe.js",
+    "static/css/2.3b6f1bda.chunk.css",
+    "static/js/2.6ee0277c.chunk.js",
+    "static/css/main.4985a48c.chunk.css",
+    "static/js/main.c5d59960.chunk.js"
+  ]
+}
