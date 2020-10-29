@@ -19,24 +19,41 @@ class Register extends React.Component{
     onChangePassword=(event)=>{
         this.setState({password:event.target.value})
     }
-    onRegister=()=>{
-        fetch('http://localhost:3000/register',{
-            method:'post',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({
-                name:this.state.name,
-                email:this.state.email,
-                password:this.state.password
-            })
-        }).then(Response=>Response.json())
-          .then(user=>{
-                if(user)
-                {   
-                    this.props.loadUser(user);
-                    this.props.onRouteChange('home')
-                }
-                
-            })
+    ValidateEmail=(mail)=> 
+    {
+        if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail))
+        {
+            return (true)
+        }
+        return (false)
+    }
+    onRegister=(event)=>{
+        event.preventDefault();
+
+        if(this.state.email==='' || this.state.password==='' || this.state.name === '')
+        {
+            alert(`Any field could not be Empty`);
+        }
+        else if(this.ValidateEmail(this.state.email))
+        {            
+            fetch('http://localhost:3000/register',{
+                method:'post',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    name:this.state.name,
+                    email:this.state.email,
+                    password:this.state.password
+                })
+            }).then(Response=>Response.json())
+            .then(user=>{
+                    if(user)
+                    {   
+                        this.props.loadUser(user);
+                        this.props.onRouteChange('home')
+                    }
+                    
+                })
+        }
     }
     render(){
     const {onRouteChange}=this.props;

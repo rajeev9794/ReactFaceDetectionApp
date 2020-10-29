@@ -1,4 +1,5 @@
 import React from 'react'
+//import fetch from 'node-react'
 
 class Signin extends React.Component {
     constructor(props) {
@@ -7,39 +8,76 @@ class Signin extends React.Component {
         this.state = {
              signInEmailChange:'',
              signInPasswordChange:''
+             
         }
     }
+    ValidateEmail=(mail)=> 
+    {
+        if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail))
+        {
+            return (true)
+        }
+        return (false)
+    }
+
     onEmailChange=(event)=>{
         this.setState({signInEmailChange:event.target.value});
-        //console.log(event.target.value);
+        console.log(event.target.value);
 
     }
     onPasswordChange=(event)=>{
         this.setState({signInPasswordChange:event.target.value});
-        //console.log(event.target.value);
+        console.log(event.target.value);
 
     }
-    onSubmitSignIn=()=>{
-        //console.log(this.state)
-        fetch('http://localhost:3000/signin',{
-            method:'post',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({
-                email:this.state.signInEmailChange,
-                password:this.state.signInPasswordChange
+    
+    onSubmitSignIn=(event)=>{
+        if(this.state.signInEmailChange==='' && this.state.signInPasswordChange==='')
+        {
+            alert(`Email and Password could not be Empty`);
+        }
+        else if(this.state.signInEmailChange=='')
+        {
+            alert('Email could not be empty');
+        }
+        else if(this.state.signInPasswordChange=='')
+        {
+            alert('Password could not be empty');
+        }
+        else if(this.ValidateEmail(this.state.signInEmailChange))
+        {
+            event.preventDefault();
+
+                fetch('http://localhost:3000/signin', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                email: this.state.signInEmailChange,
+                password: this.state.signInPasswordChange
             })
-        }).then(Response=>Response.json())
-          .then(data=>{
-              if(data === 'success')
-              this.props.onRouteChange('home')
-              else
-              alert(`user doesn't exist`);
+            }).then(Response=>Response.json())
+            .then(data=>{
+                
+                if(data.id)
+                {
+                    console.log("Data id "+data.id);
+                this.props.loadUser(data);
+                this.props.onRouteChange('home');
+                }
+               
+                
             })
-          
-        
+
+        }
+        else
+        {
+            alert('Invalid Email');
+        }
+       
+      
     }
     render(){
-        const {onRouteChange}=this.props;
+        const { laodUser ,onRouteChange}=this.props;
     return (
     
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-6 center">

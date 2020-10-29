@@ -92,15 +92,32 @@ class App extends Component {
     this.setState({ box: box });
   }
   onInputChange = (event) => {
-    //console.log(event.target.value);
     this.setState({ input: event.target.value })
   }
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input })
-    //console.log('clicked');
-    //console.log(this.state.input)
+    
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-    .then(response=> this.setBox(this.GetBoxSize(response)))
+    .then(response=> {
+      if(response)
+      {
+        fetch('http://localhost:3000/image', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+          id:this.state.user.id
+      })
+      }).then(entry=>entry.json())
+      .then(entry=>{
+        if(entry!=='Databases user not found')
+        {
+          this.setState(Object.assign(this.state.user,{entries:entry}))
+        }
+      })
+          
+      }
+      this.setBox(this.GetBoxSize(response))
+    })
     .catch(err=>console.log(err));
   }
   onRouteChange=(route)=>{
@@ -115,6 +132,8 @@ class App extends Component {
     }
 
     this.setState({route:route});
+    console.log("Given value "+ route);
+    console.log("Set value "+ this.state.route);
   }
   render() {
     return (
@@ -129,13 +148,14 @@ class App extends Component {
           <div>
         
               <Logo />
-              <Rank />
+              
+              <Rank name={this.state.user.name} entries={this.state.user.entries} />
               <TargetLinkform onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
 
               <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
         </div>:
         (
-          this.state.route==='signin'?<Signin onRouteChange={this.onRouteChange}/>:
+          this.state.route==='signin'?<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>:
           <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
         )
         }
